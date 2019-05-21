@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ankieta</title>
+    </head>
+
+    <body>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/ankieta.css' %}">
+
+        <header><h1>{{ question.id }}/9 </h1></header>
+
+        <ankieta>
+            {% load static %}
+            <h1> {{ question.question_text }}</h1>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+            {% if question.question_text == "Ile masz lat?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                   <p>{% for uzytkownik in question.uzytkownik_set.all %}
+                     <input type="radio" name="uzytkownik" id="uzytkownik{{ forloop.counter }}" value="{{ uzytkownik.id }}">
+                         <label for="uzytkownik{{ forloop.counter }}">{{ uzytkownik.wiek }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Płeć:" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for uzytkownik in question.uzytkownik_set.all %}
+                     <input type="radio" name="uzytkownik" id="uzytkownik{{ forloop.counter }}" value="{{ uzytkownik.id }}">
+                        <label for="uzytkownik{{ forloop.counter }}">{{ uzytkownik.plec }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Ile mieszkańców ma twoje miasto?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for uzytkownik in question.uzytkownik_set.all %}
+                     <input type="radio" name="uzytkownik" id="uzytkownik{{ forloop.counter }}" value="{{ uzytkownik.id }}">
+                        <label for="uzytkownik{{ forloop.counter }}">{{ uzytkownik.miasto }}</label><br>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Jakie masz wykształcenie?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for uzytkownik in question.uzytkownik_set.all %}
+                     <input type="radio" name="uzytkownik" id="uzytkownik{{ forloop.counter }}" value="{{ uzytkownik.id }}">
+                        <label for="uzytkownik{{ forloop.counter }}">{{ uzytkownik.wyksztalcenie }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Co sprawia, że spożywasz alkohol?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for czestosc in question.czestosc_set.all %}
+                     <input type="radio" name="czestosc" id="czestosc{{ forloop.counter }}" value="{{ czestosc.id }}">
+                        <label for="czestosc{{ forloop.counter }}">{{ czestosc.okazja }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Jak często spożywasz alkohol?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for czestosc in question.czestosc_set.all %}
+                     <input type="radio" name="czestosc" id="czestosc{{ forloop.counter }}" value="{{ czestosc.id }}">
+                        <label for="czestosc{{ forloop.counter }}">{{ czestosc.czestotliwosc }}</label><br>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Kiedy pierwszy raz spożyłeś/aś alkohol?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for czestosc in question.czestosc_set.all %}
+                     <input type="radio" name="czestosc" id="czestosc{{ forloop.counter }}" value="{{ czestosc.id }}">
+                        <label for="czestosc{{ forloop.counter }}">{{ czestosc.pierwszy_kontakt }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Jaki rodzaj alkoholu najczęściej spożywasz?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for alkohol in question.alkohol_set.all %}
+                     <input type="radio" name="alkohol" id="alkohol{{ forloop.counter }}" value="{{ alkohol.id }}">
+                        <label for="alkohol{{ forloop.counter }}">{{ alkohol.rodzaj_alkoholu }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+             {% if question.question_text == "Ile piw wypiłeś/aś w ciągu ostatniego miesiąca?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for alkohol in question.alkohol_set.all %}
+                     <input type="radio" name="alkohol" id="alkohol{{ forloop.counter }}" value="{{ alkohol.id }}">
+                        <label for="alkohol{{ forloop.counter }}">{{ alkohol.piwo }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Ile wódki wypiłeś/aś w ciągu ostatniego miesiąca?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for alkohol in question.alkohol_set.all %}
+                     <input type="radio" name="alkohol" id="alkohol{{ forloop.counter }}" value="{{ alkohol.id }}">
+                        <label for="alkohol{{ forloop.counter }}">{{ alkohol.wodka }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Ile wina wypiłeś/aś w ciągu ostatniego miesiąca?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for alkohol in question.alkohol_set.all %}
+                     <input type="radio" name="alkohol" id="alkohol{{ forloop.counter }}" value="{{ alkohol.id }}">
+                        <label for="alkohol{{ forloop.counter }}">{{ alkohol.wino }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+            {% if question.question_text == "Ile innego alkoholu wypiłeś/aś w ciągu ostatniego miesiąca?" %}
+                <form action="{% url 'app:vote' question.id %}" method="post">
+                    {% csrf_token %}
+                    <p>{% for alkohol in question.alkohol_set.all %}
+                     <input type="radio" name="alkohol" id="alkohol{{ forloop.counter }}" value="{{ alkohol.id }}">
+                        <label for="alkohol{{ forloop.counter }}">{{ alkohol.inne }}</label>
+                        {% endfor %}</p>
+                    <p><br><input type="submit" value="Zaglosuj"></p>
+                 </form>
+            {% endif %}
+
+        </ankieta>
+
+        <footer>
+            <p>Strona główna</p>
+            <p>Statystyki</p>
+        </footer>
+
+    </body>
+
+</html>

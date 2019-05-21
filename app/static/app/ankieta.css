@@ -1,0 +1,24 @@
+body {
+    background-image: url("images/tlo.png");
+    background-repeat: no-repeat;
+}
+
+
+header h1{
+    font-size: 25px;
+    text-align: right;
+    font-family: fantasy;
+    font-style: normal;
+    font-variant: normal;
+}
+
+ankieta h1{
+    font-size: 60px;
+    text-align: center;
+    line-height: 125px;
+}
+
+ankieta p{
+    font-size: 25px;
+    text-align: center;
+}
